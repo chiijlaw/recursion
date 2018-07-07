@@ -6,5 +6,13 @@
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className
 ) {
-  // your code here
+  var output;
+  var elementClasses = document.body.classList;
+  console.log(elementClasses);
+  var getByClassName = function (list,target) {
+  	if (elementClasses.length === 0){
+  		return output;
+  	}
+  };
+  getByClassName(elementClasses,className);
 };
