@@ -37,7 +37,7 @@ var stringifyJSON = function(obj) {
 			var inside = [];
 			var pairs = Object.entries(obj);
 			for( var i = 0; i <= pairs.length-1; i++) {
-				if (pairs[i].includes(undefined) || typeof pairs[i][1] == "function") {
+				if (pairs[i].includes(undefined) || typeof pairs[i][0] == "function" || typeof pairs[i][1] == "function") {
 					i+=0;
 				} else {
 					inside.push(stringifyJSON(pairs[i][0])+':'+stringifyJSON(pairs[i][1]));
