@@ -22,9 +22,9 @@ var stringifyJSON = function(obj) {
 		output = "[]";
 		var inside = [];
 		for (var i of obj){
-			if (!Array.isArray(i)){
+			if (!Array.isArray(i) && typeof i != "object"){
 				inside.push(stringFormat(i));
-			} else if (Array.isArray(i)){
+			} else {
 				inside.push(stringifyJSON(i));
 			}
 		}
@@ -36,8 +36,12 @@ var stringifyJSON = function(obj) {
 			output = "null";
 		} else {
 			output = "{}";
-			var inside = {};
-			if (Object.entries(inside).length > 0){
+			var inside = [];
+			var pairs = Object.entries(obj);
+			for( var i = 0; i <= pairs.length-1; i++) {
+				inside.push(stringifyJSON(pairs[i][0])+':'+stringifyJSON(pairs[i][1]));
+			}
+			if (!!inside && Object.entries(inside).length > 0){
 				output = '{'+inside+'}';
 			}
 		}
