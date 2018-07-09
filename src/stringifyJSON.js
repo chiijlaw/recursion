@@ -5,28 +5,31 @@
 
 var stringifyJSON = function(obj) {
 	var output;
-	if (typeof obj == "boolean" || typeof obj == "number" ){
-		output = obj.toString();
-	} else if (obj == null) {
-		output = "null";
-	} else if (obj == undefined) {
-		output = "undefined";
-	} else if (typeof obj == "string") {
-		output = '\"'+obj+'\"';
-	} else if (Array.isArray(obj)) {
+	var stringFormat = function (element) {
+		var result;
+		if (typeof element == "boolean" || typeof element == "number" ){
+		result = element.toString();
+		} else if (element == null) {
+			result = "null";
+		} else if (element == undefined) {
+			result = "undefined";
+		} else if (typeof element == "string") {
+			result = '\"'+element+'\"';
+		}
+		return result;
+	};
+	if (!Array.isArray(obj)) {
+		output = stringFormat(obj);
+	}
+	if (Array.isArray(obj)) {
 		output = "[]";
 		var inside = [];
 		for (var i of obj){
-			if (typeof i == "boolean" || typeof i == "number" ){
-				inside.push(i.toString());
-			} else if (i == null) {
-				inside.push("null");
-			} else if (i == undefined) {
-				inside.push("undefined");
-			} else if (typeof i == "string") {
-				inside.push('\"'+i+'\"');
-			} else if (Array.isArray(i)){
-				recursiveArray(i);
+			if (!Array.isArray(i)){
+				inside.push(stringFormat(i));
+			}
+			 if (Array.isArray(i)){
+				inside.push(stringifyJSON(i));
 			}
 		}
 		if (!!inside){
