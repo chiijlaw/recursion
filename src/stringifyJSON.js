@@ -14,8 +14,24 @@ var stringifyJSON = function(obj) {
 	} else if (typeof obj == "string") {
 		output = '\"'+obj+'\"';
 	} else if (Array.isArray(obj)) {
-		var inside = obj.join();
-		output = '['+inside+']';
+		output = "[]";
+		var inside = [];
+		for (var i of obj){
+			if (typeof i == "boolean" || typeof i == "number" ){
+				inside.push(i.toString());
+			} else if (i == null) {
+				inside.push("null");
+			} else if (i == undefined) {
+				inside.push("undefined");
+			} else if (typeof i == "string") {
+				inside.push('\"'+i+'\"');
+			} else if (Array.isArray(i)){
+				recursiveArray(i);
+			}
+		}
+		if (!!inside){
+			output = '['+inside+']';
+		}
 	}
 	return output;
 };
