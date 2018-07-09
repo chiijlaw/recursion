@@ -9,9 +9,7 @@ var stringifyJSON = function(obj) {
 		var result;
 		if (typeof element == "boolean" || typeof element == "number" ){
 		result = element.toString();
-		}  else if (element == undefined) {
-			result = "undefined";
-		} else if (typeof element == "string") {
+		}  else if (typeof element == "string") {
 			result = '\"'+element+'\"';
 		}
 		return result;
@@ -39,7 +37,11 @@ var stringifyJSON = function(obj) {
 			var inside = [];
 			var pairs = Object.entries(obj);
 			for( var i = 0; i <= pairs.length-1; i++) {
-				inside.push(stringifyJSON(pairs[i][0])+':'+stringifyJSON(pairs[i][1]));
+				if (pairs[i].includes(undefined) || typeof pairs[i][1] == "function") {
+					i+=0;
+				} else {
+					inside.push(stringifyJSON(pairs[i][0])+':'+stringifyJSON(pairs[i][1]));
+				}
 			}
 			if (!!inside && Object.entries(inside).length > 0){
 				output = '{'+inside+'}';
