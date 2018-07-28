@@ -26,9 +26,7 @@ var stringifyJSON = function(obj) {
 				inside.push(stringifyJSON(i));
 			}
 		}
-		if (!!inside){
 			output = '['+inside+']';
-		}
 	} else if (typeof obj == "object" && !Array.isArray(obj)) {
 		if (obj == null) {
 			output = "null";
